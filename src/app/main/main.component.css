@@ -1,0 +1,39 @@
+p{
+    color: aliceblue;
+}
+.game{
+    align-items: center;
+    vertical-align: middle;
+    padding: 94px;
+}
+.rows{
+    display: flex;
+    justify-content: center;
+}
+.rows strong{
+    color: white;
+}
+
+.box{
+    width: 62px;
+    height: 62px;
+    font-size: 60px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 3px;
+    border: 2px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.key{
+    
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+.key button{
+    height: 58px;
+    width: 38px;
+    margin: 3px;
+}
