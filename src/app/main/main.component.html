@@ -1,38 +1,41 @@
-<div class="container-fluid" style="background-color: rgb(67, 67, 68); text-align: center;">
+<div class="container-fluid bg-black text-center">
     <div class="game">
-        <p>Oyun Alanı</p>
         <ng-container *ngFor="let row of area">
             <div class="rows">
-                <ng-container *ngFor="let kutu of row">
-                    <div class="box"><strong></strong></div>
+                <ng-container *ngFor="let kutu of row; let i =index">
+                    <div class="box" [attr.id]="'box_' + i"><strong>{{kutu.tus}}</strong></div>
                 </ng-container>
             </div>
         </ng-container>
     </div>
-    <div class="key">
-        <p>Klavye Alanı</p>
-        <div>
+
+    <div class="container-sm" style="max-width: 450px;">
+        <div style="display: flex;">
             <ng-container *ngFor="let tus of klavye1">
-                <button class="btn btn-outline-light">{{tus.tus}}</button>
+                <button (click)="catchbtn(tus.tus)" class="btn btn-outline-light">{{(tus.tus)}}</button>
             </ng-container>
         </div>
-        <div>
+        <div style="display: flex;">
             <ng-container *ngFor="let tus of klavye2">
-                <button class="btn btn-outline-light">{{tus.tus}}</button>
+                <button (click)="catchbtn(tus.tus)" class="btn btn-outline-light">{{(tus.tus)}}</button>
             </ng-container>
         </div>
-        <div>
+        <div style="display: flex;">
             <ng-container *ngFor="let tus of klavye3">
-                <ng-container *ngIf="tus.tus=='Enter'">
-                    <button class="btn btn-success" style="width: 70px;">{{tus.tus}}</button>
+                <ng-container *ngIf="tus.tus=='ENTER'">
+                    <button (click)="gonder()" class="btn btn-success" style="width: 70px;">Enter</button>
                 </ng-container>
-                <ng-container *ngIf="tus.tus=='Sil'">
-                    <button class="btn btn-danger" style="width: 70px;">{{tus.tus}}</button>
+                <ng-container *ngIf="tus.tus=='BACKSPACE'">
+                    <button (click)="deletebtn()" class="btn btn-danger" style="width: 70px;">Sil</button>
                 </ng-container>
-                <ng-container *ngIf="tus.tus!='Enter' && tus.tus!='Sil'">
-                    <button class="btn btn-outline-light">{{tus.tus}}</button>
+                <ng-container *ngIf="tus.tus!='ENTER' && tus.tus!='BACKSPACE'">
+                    <button (click)="catchbtn(tus.tus)" class="btn btn-outline-light">{{(tus.tus)}}</button>
                 </ng-container>
             </ng-container>
         </div>
+    </div>
+
+    <div class="alert" id="hideMe">
+        <a>{{mesaj}}</a>
     </div>
 </div>
