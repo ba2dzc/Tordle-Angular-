@@ -1,0 +1,26 @@
+.nav {
+    display: flex;
+}
+
+.boxt {
+    color: rgb(255, 255, 255);
+    font-weight: 750;
+    font-size: 20px;
+    background-color: rgb(77, 77, 77);
+    margin-left: 4px;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+}
+
+.box{
+    color: rgb(255, 255, 255);
+    font-weight: 750;
+    font-size: 20px;
+    background-color: rgb(16, 197, 46); 
+    margin-left: 4px; 
+    height: 30px;
+    width: 30px; 
+    text-align: center;
+
+}

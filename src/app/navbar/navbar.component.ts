@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
 
   constructor() { }
+  tordle=['O','R','D','L','E']
 
   ngOnInit(): void {
   }
