@@ -3,6 +3,7 @@ p {
 }
 
 .game {
+    height: 65%;
     align-items: center;
     /* vertical-align: middle; */
     padding-top: 5%;
@@ -20,7 +21,8 @@ p {
 
 .box {
     width: 62px;
-    height: 62px;
+    height: 9vh;
+    max-height: 62px;
     font-size: 60px;
     font-family: Arial, Helvetica, sans-serif;
     margin: 3px;
@@ -29,7 +31,88 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
+    }
+    .salla{
+        animation-name: salla;
+        animation-duration: 500ms;
+    }
+
+    .yazili{
+      border-color: white;
+      animation-name: yazili;
+        animation-duration: 500ms;
+    }
+    .sari{
+      animation-name: çevir1;
+      animation-duration: 1000ms;
+      background-color: rgb(226, 226, 6);
+    }
+    .gri{
+      animation-name: çevir1;
+      animation-duration: 1000ms;
+      background-color: gray;
+    }
+    .yesil{
+      animation-name: çevir1;
+      animation-duration: 1000ms;
+      background-color: green;
+    }
+
+    @keyframes yazili {
+      0%, 20% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      50% {
+        transform: translateY(5px);
+      }
+      60% {
+        transform: translateY(-10px);
+      }
+      80% {
+        transform: translateY(2px);
+      }
+      100% {
+        transform: translateY(0);
+
+      }
+    }
+
+@keyframes salla{
+    10%,
+      90% {
+        transform: translateX(-1px);
+      }
+      20%,
+      80% {
+        transform: translateX(2px);
+      }
+      30%,
+      50%,
+      70% {
+        transform: translateX(-4px);
+      }
+
+      40%,
+      60% {
+        transform: translateX(4px);
+      }
 }
+@keyframes çevir1{
+    0% {
+      transform: rotateX(0);
+      background-color: black
+    }
+    25% {
+      transform: rotateX(-90deg);
+    }
+    100% {
+      transform: rotateX(0);
+    }
+  }
+
 
 .alert {
     position: absolute;
@@ -37,7 +120,7 @@ p {
     right: 0; 
     margin-left: auto; 
     margin-right: auto; 
-    top: 100px;
+    top: 50px;
     background-color: rgb(107, 107, 107);
     color: white;
     width: fit-content;
@@ -50,7 +133,7 @@ button {
     font-weight: bold;
     border: 1;
     padding: 0;
-    margin: 5px 3px 0 0;
+    margin: 0 3px 5px 0;
     height: 58px;
     border-radius: 8px;
     color: white;
