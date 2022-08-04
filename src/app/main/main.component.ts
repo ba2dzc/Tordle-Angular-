@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MainComponent implements OnInit {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
   area = [
     [{ tus: '' }, { tus: '' }, { tus: '' }, { tus: '' }, { tus: '' }],
     [{ tus: '' }, { tus: '' }, { tus: '' }, { tus: '' }, { tus: '' }],
@@ -23,8 +23,8 @@ export class MainComponent implements OnInit {
   sutun = 0;
   mesaj = "";
   cevap = this.kelimeSeç();
-  url="https://sozluk.gov.tr/gts?ara="+this.cevap.toLocaleLowerCase();
-  public sozluk:Array<any>[]=[];
+  url = "https://sozluk.gov.tr/gts?ara=" + this.cevap.toLocaleLowerCase();
+  public sozluk: Array<any>[] = [];
   harfler = (Array.from(this.cevap));
 
   klavye1 = [
@@ -43,21 +43,73 @@ export class MainComponent implements OnInit {
   ]
   keyboard = [...this.klavye1, ...this.klavye2, ...this.klavye3];
 
+  tahmin:Array<string[]>= [[], [], [], [], [], []]
+  paylas(){
+    var d=""
+    this.tahmin.forEach(element => {
+      d+=element
+    });
+  }
+
   kelimeSeç() {
     var index = Math.floor(Math.random() * 5535)
     var cevap = kelime[index];
     return cevap
   }
 
+yenile():void{
+  window.location.reload();
+}
 
   async bildir(sure: number) {
+    var kopyala=this.tahmin
     const msg = document.getElementById('hideMe');
+    var txt=document.createElement("h6")
+    
 
-    if (msg != null) {
-      msg.textContent=this.mesaj
+    if (msg != null && sure<6000) {
+      txt.textContent=this.mesaj
+      msg.appendChild(txt)
       msg.style.opacity = '1';
       await new Promise(f => setTimeout(f, sure));
       msg.style.opacity = '0';
+      msg.removeChild(txt)
+    }
+    else if(msg != null && sure>6000){
+      txt.textContent=this.mesaj+" Cevap : "+this.cevap
+      msg.appendChild(txt)
+      var br=document.createElement("hr")
+      msg.appendChild(br)
+
+      var paylas=document.createElement("button")
+      paylas.textContent="Paylaş"
+      var cevap=this.cevap
+      paylas.className="btn btn-outline-light"
+      paylas.onclick=function copy(){
+        var d="Tordle sonucum.\n" + cevap + "\n"
+        var a=""
+        for (let i = 0; i < 6; i++) {
+          for (let j = 0; j < 5; j++) {
+            if(kopyala[i][j]!=null)
+            a+=kopyala[i][j]
+          }
+          d+=a + "\n"
+          a=""
+          txt.textContent="Sonuçlar panoya kopyalandı."
+        };
+        navigator.clipboard.writeText(d).then().catch(e => console.error(e));
+        console.log(d)
+      }
+      paylas.style.marginRight="10px"
+
+      var yenile=document.createElement("button")
+      yenile.textContent="Yeni Oyun"
+      yenile.className="btn btn-outline-light"
+      yenile.onclick= function yenile(){window.location.reload();}
+      msg.appendChild(paylas)
+      msg.appendChild(yenile)
+      await new Promise(f => setTimeout(f, 1500));
+      msg.style.opacity = '1'
     }
   }
 
@@ -90,6 +142,7 @@ export class MainComponent implements OnInit {
         // console.log(verindex[index])
         // console.log(this.harfler[index])
       }
+
       if (!kelime.includes(veri)) {
         this.mesaj = "Bu kelime geçersiz"
         this.bildir(1000)
@@ -107,49 +160,57 @@ export class MainComponent implements OnInit {
         //     harfler[harf]=0;
         //   } harfler[harf]++;
         // } console.log(harfler)
-        if (veri === this.cevap) {
-          fetch(this.url)
-          .then(res=>res.json())
-          this.mesaj = "Bravo"
-          this.bildir(60000)
-        }
 
         for (let index = 0; index < 5; index++) {
           this.area[this.satir].map(async (item, index) => {
             var box = document.getElementById("box_" + this.satir + index)
             if (this.cevap.includes(item.tus)) {
-              if (item.tus == this.cevap[index]){
+              if (item.tus == this.cevap[index]) {
                 box?.classList.add("yesil")
-                await this.wait(180);}
-                else{
-              box?.classList.add("sari")
-              await this.wait(180);}
+                this.tahmin[this.satir][index]="🟩"
+                 
               }
-            else{
+              else {
+                box?.classList.add("sari")
+                this.tahmin[this.satir][index]="🟨"
+              }
+            }
+            else {
               box?.classList.add("gri")
-              await this.wait(180);}
+              this.tahmin[this.satir][index]="⬛️"
+            }
           }
           )
-          await this.wait(180);
         }
+
+        if (veri === this.cevap) {
+          fetch(this.url)
+            .then(res => res.json())
+          this.mesaj = "Bravo doğru cevabı buldun."
+          this.bildir(60000)
+          this.satir = 6;
+          this.sutun=6
+          console.log(this.tahmin)
+        }
+
         console.log(veri)
         this.satir++;
+        if (this.satir == 6) {
+          this.mesaj = "Malesef bilemedin. Cevap : " + this.cevap
+          this.bildir(60000)
+          console.log(this.tahmin)
+        }
         this.sutun = 0;
       }
     }
     else {
+      if(this.satir<6){
       this.mesaj = "Yetersiz harf sayısı.";
-      this.bildir(1000)
+      this.bildir(1000)}
     }
 
   }
-  private async wait(ms: number) {
-    await new Promise<void>((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, ms);
-    })
-  }
+
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
@@ -170,12 +231,12 @@ export class MainComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.http.get<Array<any>>(this.url).subscribe(data=>{
-      this.sozluk=data;
-      
-      
+    this.http.get<Array<any>>(this.url).subscribe(data => {
+      this.sozluk = data;
+
+
     })
-    
+
   }
 
 }
