@@ -129,7 +129,7 @@ p {
 
 }
 
-button {
+.klavye > button {
     font-weight: bold;
     border: 1;
     padding: 0;

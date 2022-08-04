@@ -8,17 +8,17 @@
     </div>
 
     <div class="sa container-sm fixed-bottom" style="max-width: 450px;">
-        <div style="display: flex;">
+        <div style="display: flex;" class="klavye">
             <ng-container *ngFor="let tus of klavye1">
                 <button (click)="catchbtn(tus.tus)" class="btn btn-outline-light">{{(tus.tus)}}</button>
             </ng-container>
         </div>
-        <div style="display: flex;">
+        <div style="display: flex;"class="klavye">
             <ng-container *ngFor="let tus of klavye2">
                 <button (click)="catchbtn(tus.tus)" class="btn btn-outline-light">{{(tus.tus)}}</button>
             </ng-container>
         </div>
-        <div style="display: flex;">
+        <div style="display: flex;"class="klavye">
             <ng-container *ngFor="let tus of klavye3">
                 <ng-container *ngIf="tus.tus=='ENTER'">
                     <button (click)="gonder()" class="btn btn-success" style="width: 70px;">Enter</button>
@@ -34,6 +34,5 @@
     </div>
 
     <div class="alert" id="hideMe">
-        <a></a>
     </div>
 </div>
