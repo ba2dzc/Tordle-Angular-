@@ -196,7 +196,7 @@ yenile():void{
         console.log(veri)
         this.satir++;
         if (this.satir == 6) {
-          this.mesaj = "Malesef bilemedin. Cevap : " + this.cevap
+          this.mesaj = "Malesef bilemedin."
           this.bildir(60000)
           console.log(this.tahmin)
         }
